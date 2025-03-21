@@ -5,24 +5,25 @@ import asyncio
 import datetime
 import re
 
-show_plot = 1
-log = 1
+show_plot = 0
+export_plot = 0
+log = 0
 
-mass_can = 15.98  # Mass of can (g)
-mass_water_can = 100.08  # Mass of water inside can (g)
-mass_salt = 4  # Mass of salt (g)
-mass_water_cooling = 80.03  # Mass of water in cooling jacket (g)
+salt_name = "KNO3"
+mass_can = 16.09  # Mass of can (g)
+mass_water_can = 100.07  # Mass of water inside can (g)
+mass_salt = 13  # Mass of salt (g)
+mass_water_cooling = 63.24  # Mass of water in cooling jacket (g)
+delta_H_lit = 34900 # Literature value
 T_initial = 19.781  # Initial temperature (°C)
 T_final = 19.113  # Final temperature (°C)
-delta_H_lit = 16800 # Literature value
 
 specific_heat_water = 4.184  # Specific heat of water (J/g°C)
 specific_heat_can = 0.9  # Specific heat of can (J/g°C)
-molar_mass_salt = 97.94  # Molar mass of salt (g/mol)
 
 # Autoimport csv
 try:
-    with open("data.csv", "r") as f:
+    with open("kno3.csv", "r") as f:
         print("Data found. Loading from file...")
         contents = csv.reader(f)
         header = next(contents)
@@ -32,6 +33,13 @@ try:
 except FileNotFoundError:
     print("Data not found. Using coded values")
 
+salts = {"KNO3": 101.1032, "NH4Br": 97.94, "LiCl": 42.394, "KBr": 119.02}
+
+for k, v in salts.items():
+    if k.lower() == salt_name.lower():
+        norm_salt_name = k
+        molar_mass_salt = v
+
 delta_T = T_final - T_initial
 
 delta_H_rxn = (
@@ -40,7 +48,10 @@ delta_H_rxn = (
             + mass_water_can * specific_heat_water * delta_T
               ) * -1
 
-delta_H_soln = delta_H_rxn / (mass_salt / molar_mass_salt)
+if molar_mass_salt is not None:
+    delta_H_soln = delta_H_rxn / (mass_salt / molar_mass_salt)
+else:
+    raise ValueError("Salt not found")
 
 if log:
     # we loggin

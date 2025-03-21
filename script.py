@@ -63,7 +63,7 @@ if log:
 print(f"ΔT: {T_final} - {T_initial} = {delta_T:.6f}\n")
 print(f"ΔH_rxn (J): {delta_H_rxn:.6f}")
 print(f"ΔH_soln (J/mol): {delta_H_soln:.6f}")
-print(f"%Error: {(abs(delta_H_soln - 16800)*100)/16800}")
+print(f"%Error: {(abs(delta_H_soln - delta_H_lit)*100)/delta_H_lit}")
 
 
 async def plot_data():

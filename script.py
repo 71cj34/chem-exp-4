@@ -15,6 +15,10 @@ mass_water_can = 100.04  # Mass of water inside can (g)
 mass_salt = 4  # Mass of salt (g)
 mass_water_cooling = 80.15  # Mass of water in cooling jacket (g)
 delta_H_lit = 16800  # Literature value
+
+# set this as just the name.csv if it is in the same folder, otherwise a path using forward slashes
+csv_name = ""
+# ONLY SET THESE TWO IF YOU ARE NOT IMPORTING A .CSV
 T_initial = 19.781  # Initial temperature (°C)
 T_final = 19.113  # Final temperature (°C)
 
@@ -23,7 +27,7 @@ specific_heat_can = 0.9  # Specific heat of can (J/g°C)
 
 # Autoimport csv
 try:
-    with open("NH4Br - Copy.csv", "r") as f:
+    with open(csv_name, "r") as f:
         print("Data found. Loading from file...")
         contents = csv.reader(f)
         header = next(contents)

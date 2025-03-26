@@ -9,12 +9,12 @@ show_plot = 0
 export_plot = 0
 log = 0
 
-salt_name = "KNO3"
-mass_can = 16.09  # Mass of can (g)
-mass_water_can = 100.07  # Mass of water inside can (g)
-mass_salt = 13  # Mass of salt (g)
-mass_water_cooling = 63.24  # Mass of water in cooling jacket (g)
-delta_H_lit = 34900 # Literature value
+salt_name = "nh4br"
+mass_can = 14.83  # Mass of can (g)
+mass_water_can = 100.04  # Mass of water inside can (g)
+mass_salt = 4  # Mass of salt (g)
+mass_water_cooling = 80.15  # Mass of water in cooling jacket (g)
+delta_H_lit = 16800  # Literature value
 T_initial = 19.781  # Initial temperature (°C)
 T_final = 19.113  # Final temperature (°C)
 
@@ -23,7 +23,7 @@ specific_heat_can = 0.9  # Specific heat of can (J/g°C)
 
 # Autoimport csv
 try:
-    with open("kno3.csv", "r") as f:
+    with open("NH4Br - Copy.csv", "r") as f:
         print("Data found. Loading from file...")
         contents = csv.reader(f)
         header = next(contents)
@@ -39,14 +39,19 @@ for k, v in salts.items():
     if k.lower() == salt_name.lower():
         norm_salt_name = k
         molar_mass_salt = v
+        print(f"Salt: {norm_salt_name}; Molar mass: {molar_mass_salt}")
 
 delta_T = T_final - T_initial
 
 delta_H_rxn = (
-            mass_water_cooling * specific_heat_water * delta_T
+            (mass_water_cooling + mass_salt) * specific_heat_water * delta_T
             + mass_can * specific_heat_can * delta_T
             + mass_water_can * specific_heat_water * delta_T
               ) * -1
+
+# alternative formula (NON WORKING)
+# delta_H_rxn = (specific_heat_water * (mass_water_cooling + mass_water_can)
+#             + mass_can * specific_heat_can) * delta_T * -1 
 
 if molar_mass_salt is not None:
     delta_H_soln = delta_H_rxn / (mass_salt / molar_mass_salt)

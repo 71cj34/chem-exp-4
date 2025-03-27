@@ -1,3 +1,6 @@
+# Note: this script contains only the calculations for Part B. Part A is done on Stemble (it does it automatically for you so you don't need a script for it).
+# The provided values are for test tubes 1, 2, 3 respectively. I highly recommend you get your own values and don't just use mine because I'm 99% sure I did the experiment wrong.
+
 # V_KSCN = 2
 # V_FeNO3 = 5
 # V_H2O = 3
@@ -16,7 +19,7 @@ V_H2O = 1
 Abs = 0.370
 Slope = 4902
 
-##############################
+#######################
 
 V_tot = V_H2O+V_KSCN+V_FeNO3
 

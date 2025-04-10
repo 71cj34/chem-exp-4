@@ -174,9 +174,13 @@ if __name__ == "__main__":
         try:
             a = int(input("Which task to run (0 for error % cmdlet, 4 for all three): "))
             if a == 4:
-                task_1()
-                # task_2()
-                # task_3()
+                for i in range(1, 4):
+                    exec(f"task_{i}()")
+                    b = input(f"\n\nTASK {i} FINISHED. Continue with task {i+1} (y/n)? ")
+                    if b != y:
+                        break
+                    else:
+                        continue
             elif a == 0:
                 print(f'{error_pct(float(input("Experimental value: ")), float(input("Theoretical Value: "))):.4f}%')
             else:
